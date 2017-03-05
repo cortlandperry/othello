@@ -1,4 +1,11 @@
 #include "player.hpp"
+/*
+*	This is a minor change so that I get github to be working.
+*
+*
+*/
+
+
 
 /*
  * Constructor for the player; initialize everything here. The side your AI is
