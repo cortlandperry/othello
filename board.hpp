@@ -31,8 +31,8 @@ public:
     int count(Side side);
     int countBlack();
     int countWhite();
-    //std::vector<Move*> getValidMoves(Side side);
-
+    int getWeight(Move *m);
+    int getMoveScore(Move *m, Side side);
     void setBoard(char data[]);
 };
 

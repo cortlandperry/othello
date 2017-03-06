@@ -67,34 +67,62 @@ bool Board::hasMoves(Side side) {
     return false;
 }
 
+
 /*
-*   This function is intended to take the current board and check which moves
-*   are valid
-*
+*   This will give us the optimal weighted square aka the hueristic
+*   Return 0 if it is diagnol next to corner, 1 if on edge next to the corner
+*   Return 100 if it is on corner
+*   Return 75 if on edge
+*   
 */
+int Board::getWeight(Move *m) {
+    int X = m->getX();
+    int Y = m->getY();
+    int answer;
 
-/*
+    //initializing values for the weights, corners are highest weight
+    //middle is average, near corners is pretty bad
+    int weights[8][8] = 
+    {
+        {1000, -20, 20, 20, 20, 20, -20, 1000},
+        {-20, -50, 10, 10, 10, 10, -50, -20},
+        {200, 10, 10, 10, 10 , 10 , 10, 200},
+        {200, 10, 10, 10, 10 , 10 , 10, 200},
+        {200, 10, 10, 10, 10 , 10 , 10, 200},
+        {200, 10, 10, 10, 10 , 10 , 10, 200},
+        {-20, -50, 10, 10, 10, 10, -50, -20},
+        {1000, -20, 20, 20, 20, 20, -20, 1000}
 
-std::vector<Move*> Board::getValidMoves(Side side){
-    std::vector<Move*> array;
-    
-    cerr << "hello" << endl;
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            Move move(i, j);
-            
-            if (checkMove(&move, side))
-            {
-                cerr << i << ", " << j << endl;
-                array.push_back(move);
-            }
-            
-        }
+    };
+    answer = weights[X][Y];
+    return answer;  
+}
+
+int Board::getMoveScore(Move *m, Side side) {
+    int initial;
+    int final;
+    int score;
+    int weight = getWeight(m);
+    Board *board = copy();
+
+    if(side == WHITE){
+        initial = board->countWhite();
+        board->doMove(m, side);
+        final = board->countWhite();
+    }
+    else
+    {
+        initial = board->countBlack();
+        board->doMove(m, side);
+        final = board->countBlack();
     }
 
-    return array;
+    score = (final - initial)*weight;
+
+    return score;
+
 }
-*/
+
 
 /*
  * Returns true if a move is legal for the given side; false otherwise.

@@ -66,7 +66,8 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 
 	
 	std::vector<Move*> array;
-
+	int desiredmove = 0;
+	int maxscore;
 	//creating the array of valid moves
 	if(playerboard->hasMoves(color))
 	{
@@ -74,25 +75,45 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         	for (int j = 0; j < 8; j++) {
             	Move * move = new Move(i, j);         	
             	if (playerboard->checkMove(move, color)){
-            		//cerr << i << ", " << j << endl;
-            		
-            		playerboard->doMove(move, color);
-            		return move;
-            		//array.push_back(pointer);
+            		array.push_back(move);
 
             	}
         	}
     	}
+
+    	//This is stuff for our heuristic and beating simpleplayer
+    	maxscore = playerboard->getMoveScore(array[0], color);
+    	for(unsigned int i = 0; i < array.size(); i++)
+    	{
+
+    		if(playerboard->getMoveScore(array[i], color) > maxscore)
+    		{
+
+    			desiredmove = i;
+    			maxscore = playerboard->getMoveScore(array[i], color);
+    		}
+    	}
+    	playerboard->doMove(array[desiredmove], color);
+    	return array[desiredmove];
+    	
+
+    	/*
+    	//This was here for when I made the random picker guy
+    	//picking a random move out of valid moves
+    	srand(time(NULL));
+		int random = rand()%array.size();
+		playerboard->doMove(array[random], color);
+		return array[random];
+		*/
+		
+    	
 	}
 	
 	return nullptr;
 	
-	/*
-	srand(time(NULL));
-	int random = rand()%array.size();
-	playerboard.doMove(array[random], color);
-	return array[random];
-	*/
+	
+	
+	
 
 
 	//cerr << array[0]->getX() << ", " << array[0]->getY() << endl;
