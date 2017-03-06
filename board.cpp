@@ -84,20 +84,22 @@ int Board::getWeight(Move *m) {
     //middle is average, near corners is pretty bad
     int weights[8][8] = 
     {
-        {1000, -20, 20, 20, 20, 20, -20, 1000},
+        {1000, -20, 200, 200, 200, 200, -20, 1000},
         {-20, -50, 10, 10, 10, 10, -50, -20},
         {200, 10, 10, 10, 10 , 10 , 10, 200},
         {200, 10, 10, 10, 10 , 10 , 10, 200},
         {200, 10, 10, 10, 10 , 10 , 10, 200},
         {200, 10, 10, 10, 10 , 10 , 10, 200},
         {-20, -50, 10, 10, 10, 10, -50, -20},
-        {1000, -20, 20, 20, 20, 20, -20, 1000}
+        {1000, -20, 200, 200, 200, 200, -20, 1000}
 
     };
     answer = weights[X][Y];
     return answer;  
 }
 
+
+// Calculate the move with the highest weight, which the AI returns
 int Board::getMoveScore(Move *m, Side side) {
     int initial;
     int final;
