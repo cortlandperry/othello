@@ -5,7 +5,7 @@
 *
 */
 
-
+// this is Alex practicing commit
 
 /*
  * Constructor for the player; initialize everything here. The side your AI is
