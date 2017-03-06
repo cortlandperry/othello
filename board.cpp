@@ -68,6 +68,35 @@ bool Board::hasMoves(Side side) {
 }
 
 /*
+*   This function is intended to take the current board and check which moves
+*   are valid
+*
+*/
+
+/*
+
+std::vector<Move*> Board::getValidMoves(Side side){
+    std::vector<Move*> array;
+    
+    cerr << "hello" << endl;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            Move move(i, j);
+            
+            if (checkMove(&move, side))
+            {
+                cerr << i << ", " << j << endl;
+                array.push_back(move);
+            }
+            
+        }
+    }
+
+    return array;
+}
+*/
+
+/*
  * Returns true if a move is legal for the given side; false otherwise.
  */
 bool Board::checkMove(Move *m, Side side) {
@@ -142,31 +171,7 @@ void Board::doMove(Move *m, Side side) {
     set(side, X, Y);
 }
 
-/*
-*   This function is intended to take the current board and check which moves
-*   are valid
-*
-*/
-std::vector<Move*> Board::getValidMoves(Side side){
-    std::vector<Move*> array;
-    
-    cerr << "hello" << endl;
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            Move* move;
-            move->setX(i);
-            move->setY(j);
-            if (checkMove(move, side))
-            {
-                cerr << i << ", " << j << endl;
-                array.push_back(move);
-            }
-            delete move;
-        }
-    }
 
-    return array;
-}
 
 
 /*

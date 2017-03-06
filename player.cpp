@@ -1,5 +1,7 @@
 #include "player.hpp"
 #include <iostream>
+#include <stdlib.h> 
+#include <time.h>
 
 /*
 *	This is a minor change so that I get github to be working.
@@ -18,7 +20,7 @@ Player::Player(Side side) {
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
     color = side;	//side that the player is on
-    playerboard = Board();	//board that I deal with
+    playerboard = new Board();	//board that I deal with
     /*
      * TODO: Do any initialization you need to do here (setting up the board,
      * precalculating things, etc.) However, remember that you will only have
@@ -50,22 +52,54 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
      * TODO: Implement how moves your AI should play here. You should first
      * process the opponent's opponents move before calculating your own move
      */
+
+	//making the opponents move first
 	if (color == WHITE)
 	{
-		playerboard.doMove(opponentsMove, BLACK);
-		cerr << "placed opponent" << endl;
+		playerboard->doMove(opponentsMove, BLACK);
 	}
 	else
 	{
-		playerboard.doMove(opponentsMove, WHITE);
+		playerboard->doMove(opponentsMove, WHITE);
 	}
 
 
-	std::vector<Move*> valids = playerboard.getValidMoves(color);
-	cerr << "got past valid" << endl;
+	
+	std::vector<Move*> array;
 
-	Move* attempt = valids[0];
+	//creating the array of valid moves
+	if(playerboard->hasMoves(color))
+	{
+		for (int i = 0; i < 8; i++) {
+        	for (int j = 0; j < 8; j++) {
+            	Move * move = new Move(i, j);         	
+            	if (playerboard->checkMove(move, color)){
+            		cerr << i << ", " << j << endl;
+            		
+            		playerboard->doMove(move, color);
+            		return move;
+            		//array.push_back(pointer);
+
+            	}
+        	}
+    	}
+	}
+	
+	return nullptr;
+	
+	/*
+	srand(time(NULL));
+	int random = rand()%array.size();
+	playerboard.doMove(array[random], color);
+	return array[random];
+	*/
+
+
+	//cerr << array[0]->getX() << ", " << array[0]->getY() << endl;
+	//return array[1];
+	//return nullptr;
+	
 	
 
-    return attempt;
+    
 }

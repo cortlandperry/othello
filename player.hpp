@@ -10,7 +10,7 @@ using namespace std;
 
 class Player {
 private:
-	Board playerboard;
+	Board *playerboard;
     Side color;
 
 public:

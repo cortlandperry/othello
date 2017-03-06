@@ -31,7 +31,7 @@ public:
     int count(Side side);
     int countBlack();
     int countWhite();
-    std::vector<Move*> getValidMoves(Side side);
+    //std::vector<Move*> getValidMoves(Side side);
 
     void setBoard(char data[]);
 };
