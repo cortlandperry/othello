@@ -74,7 +74,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         	for (int j = 0; j < 8; j++) {
             	Move * move = new Move(i, j);         	
             	if (playerboard->checkMove(move, color)){
-            		cerr << i << ", " << j << endl;
+            		//cerr << i << ", " << j << endl;
             		
             		playerboard->doMove(move, color);
             		return move;
