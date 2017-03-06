@@ -4,6 +4,8 @@
 #include <iostream>
 #include "common.hpp"
 #include "board.hpp"
+
+
 using namespace std;
 
 class Player {

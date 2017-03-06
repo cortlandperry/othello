@@ -3,6 +3,9 @@
 
 #include <bitset>
 #include "common.hpp"
+#include <vector>
+#include <iostream>
+
 using namespace std;
 
 class Board {
@@ -28,6 +31,7 @@ public:
     int count(Side side);
     int countBlack();
     int countWhite();
+    std::vector<Move*> getValidMoves(Side side);
 
     void setBoard(char data[]);
 };

@@ -1,4 +1,6 @@
 #include "player.hpp"
+#include <iostream>
+
 /*
 *	This is a minor change so that I get github to be working.
 *
@@ -51,14 +53,19 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	if (color == WHITE)
 	{
 		playerboard.doMove(opponentsMove, BLACK);
+		cerr << "placed opponent" << endl;
 	}
 	else
 	{
 		playerboard.doMove(opponentsMove, WHITE);
 	}
 
-	
+
+	std::vector<Move*> valids = playerboard.getValidMoves(color);
+	cerr << "got past valid" << endl;
+
+	Move* attempt = valids[0];
 	
 
-    return nullptr;
+    return attempt;
 }
