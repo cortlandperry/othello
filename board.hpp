@@ -32,6 +32,7 @@ public:
     int countBlack();
     int countWhite();
     int getWeight(Move *m);
+    int getSimpleScore(Side side);
     int getMoveScore(Move *m, Side side);
     void setBoard(char data[]);
 };

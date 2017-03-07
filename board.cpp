@@ -69,8 +69,8 @@ bool Board::hasMoves(Side side) {
 
 
 /*
-*   Helper Function: This will give us the optimal weighted square aka the hueristic
-*   Return 0 if it is diagnol next to corner, 1 if on edge next to the corner
+*   Helper Function: This will give us the optimal weighted square aka the heuristic
+*   Return 0 if it is diagonal next to corner, 1 if on edge next to the corner
 *   Return 100 if it is on corner
 *   Return 75 if on edge
 *   
@@ -99,7 +99,34 @@ int Board::getWeight(Move *m) {
 }
 
 
-// Calculate the move with the highest weight, which the AI returns
+/*
+ * Calculate the score of a move using the heuristic of the difference 
+ * in number of stones on the board, assuming that we are the white playe.
+ * @Param: move to be made and player doing the move
+ */
+int Board::getSimpleScore(Side side)
+{
+	Board *board = copy();
+	int score;
+	
+	if (side == WHITE)
+	{
+		score = board->countWhite() - board->countBlack();
+	}
+	
+	else
+	{
+		score = board->countBlack() - board->countWhite();
+	}
+	
+    return score;
+}
+
+
+/*
+ * Calculate the score of a move with the highest weight, which the AI returns.
+ * @Param: The move to be made and the player making the move
+ */
 int Board::getMoveScore(Move *m, Side side) {
     int initial;
     int final;
@@ -119,10 +146,8 @@ int Board::getMoveScore(Move *m, Side side) {
         final = board->countBlack();
     }
 
-    score = (final - initial)*weight;
-
+    score = (final - initial) * weight;
     return score;
-
 }
 
 
