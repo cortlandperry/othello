@@ -126,15 +126,17 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	//return nullptr;
 	
 	
-	// This calls Heuristic Player
-	//return heuristicPlayer(opponentsMove, msLeft);
+	
+	
+	
+	// This is the call to the Heuristic Player
+	// return heuristicPlayer(opponentsMove, msLeft);
 	
 	
 	
 	
 	
-	// This calls the Minimax player	
-	testingMinimax = true;
+	// This code calls the Minimax player	
 	
 	// The move to be returned at the end of the minmax algorithm
 	Move * best_move;
@@ -166,7 +168,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 				first_board->doMove(first_move, color);
 				
 				// initialize the minimum variable
-				int minimum = 0;
+				int minimum;
 				
 				// loop through to find the possible moves on the cloned board after making the first_move
 				for (int k = 0; k < 8; k ++)
@@ -190,10 +192,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 						}
 					}
 				}
+				
 				// compute the maximum of the worst-case scenarios for our AI
 				if (minimax < minimum)
 				{
-					minimax = minimum;
+					minimax = minimum;			
 					best_move = first_move;
 				}
 			}
@@ -202,15 +205,5 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	return best_move;			
 	
-	
-	
-	
-	
-	
-	
-	
-	// Things to be done: Clean up doMove function, ask about testingMinimax 
-	// boolean within doMove function, ask whether initial state of board is correct when
-	// testing Minimax, ask about beating ConstantTimePlayer
 }
 	

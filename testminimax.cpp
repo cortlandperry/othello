@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 
     // Set your player's internal board state to the example state.
-    playerboard->setBoard(boardData);
+    player->playerboard->setBoard(boardData);
 
     // Get player's move and check if it's right.
     Move *move = player->doMove(nullptr, 0);

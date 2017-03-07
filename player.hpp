@@ -10,10 +10,11 @@ using namespace std;
 
 class Player {
 private:
-	Board *playerboard;
     Side color;
 
 public:
+	Board *playerboard;
+
     Player(Side side);
     ~Player();
 
