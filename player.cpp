@@ -133,13 +133,9 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	
 	
-	
-	
-	
-	
-	
 	// This calls the Minimax player	
 	testingMinimax = true;
+	
 	// The move to be returned at the end of the minmax algorithm
 	Move * best_move;
 	
@@ -164,10 +160,15 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 			Move *first_move = new Move(i, j);         	
 			if (playerboard->checkMove(first_move, color))
 			{
+				// clone the playerboard so as to make first_move on it
 				Board *first_board = playerboard->copy();
+				// make first_move on the copied board
 				first_board->doMove(first_move, color);
 				
+				// initialize the minimum variable
 				int minimum = 0;
+				
+				// loop through to find the possible moves on the cloned board after making the first_move
 				for (int k = 0; k < 8; k ++)
 				{
 					for (int s = 0; s < 8; s++)
@@ -175,9 +176,13 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 						Move *second_move = new Move(k, s);
 						if (first_board->checkMove(second_move, opponent))
 						{
+							// clone first_board so as to make second_move on it
 							Board *second_board = first_board->copy();
+							// make second_move on the copied board
 							second_board->doMove(second_move, opponent);
+							// calculate the simple heuristic score of the opponent on the second_board
 							score = second_board->getSimpleScore(opponent);
+							// compute the worst possible scenario for our AI
 							if (score < minimum)
 							{
 								minimum = score;
@@ -185,7 +190,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 						}
 					}
 				}
-				
+				// compute the maximum of the worst-case scenarios for our AI
 				if (minimax < minimum)
 				{
 					minimax = minimum;
@@ -197,5 +202,15 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	return best_move;			
 	
+	
+	
+	
+	
+	
+	
+	
+	// Things to be done: Clean up doMove function, ask about testingMinimax 
+	// boolean within doMove function, ask whether initial state of board is correct when
+	// testing Minimax, ask about beating ConstantTimePlayer
 }
 	
