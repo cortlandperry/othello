@@ -69,7 +69,7 @@ Move *Player::heuristicPlayer(Move *opponentsMove, int msLeft)
 	int maxscore;
 	
 	// base case if there are no valid moves for the AI
-	if(playerboard->hasMoves(color) == false)
+	if (playerboard->hasMoves(color) == false)
 	{
 		return nullptr;
 	}
@@ -119,14 +119,11 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
      * int random = rand()%array.size();
      * playerboard->doMove(array[random], color);
      * return array[random];
-     * 
      */
 	
 	//cerr << array[0]->getX() << ", " << array[0]->getY() << endl;
     //return array[1];
 	//return nullptr;
-	
-	
 	
 	
 	// This calls Heuristic Player
@@ -141,53 +138,64 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	
 	
-	// This calls the Minimax player
+	// This calls the Minimax player	
+	testingMinimax = true;
+	// The move to be returned at the end of the minmax algorithm
+	Move * best_move;
+	
+	// the maximum of the worst case scenarios and the score using the heuristic of the difference in number of stones on the board.
+	int minimax = 0, score = 0;
+	
+	// represents the color of the opponent
+	Side opponent = (color == BLACK) ? WHITE : BLACK;
 	
 	
-	
-	// copy, make new_move, get the best move for black player, array of moves and corresponding scores
-	Board *copy_board = playerboard->copy();
-	Player *next_player = new Player(BLACK);
-	
-	// create two arrays, one for WHITE and one for BLACK AI's
-	vector<Move*> white array, black_array;
-	
-	// keep track of total score
-	int max_score;
-	
-	// base case if there are no valid moves for the AI
-	if(copy_board->hasMoves(color) == false)
+	// base case if there are no valid moves for our AI
+	if (playerboard->hasMoves(color) == false)
 	{
 		return nullptr;
 	}
 	
-	//creating the array of valid moves
-	else
+	// otherwise calculate the best move for our AI
+	for (int i = 0; i < 8; i++)
 	{
-		for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++) 
 		{
-			for (int j = 0; j < 8; j++) 
+			Move *first_move = new Move(i, j);         	
+			if (playerboard->checkMove(first_move, color))
 			{
-				Move * move = new Move(i, j);         	
-            	if (copy_board->checkMove(move, color))
-            	{
-            		white_array.push_back(move);
-            	}
-        	}
-    	}
-    	
-    	// This is the code for our heuristic and beating simpleplayer
-    	maxscore = playerboard->getMoveScore(array[0], color);
-    	for (unsigned int i = 0; i < array.size(); i++)
-    	{
-    		if (playerboard->getMoveScore(array[i], color) > maxscore)
-    		{
-    			desiredmove = i;
-    			maxscore = playerboard->getMoveScore(array[i], color);
-    		}
-    	}
-    	playerboard->doMove(array[desiredmove], color);
-    	return array[desiredmove];
+				Board *first_board = playerboard->copy();
+				first_board->doMove(first_move, color);
+				
+				int minimum = 0;
+				for (int k = 0; k < 8; k ++)
+				{
+					for (int s = 0; s < 8; s++)
+					{
+						Move *second_move = new Move(k, s);
+						if (first_board->checkMove(second_move, opponent))
+						{
+							Board *second_board = first_board->copy();
+							second_board->doMove(second_move, opponent);
+							score = second_board->getSimpleScore(opponent);
+							if (score < minimum)
+							{
+								minimum = score;
+							}
+						}
+					}
+				}
+				
+				if (minimax < minimum)
+				{
+					minimax = minimum;
+					best_move = first_move;
+				}
+			}
+		}
 	}
+	
+	return best_move;			
+	
 }
 	
