@@ -11,28 +11,29 @@
 
 // this is Alex practicing commit
 
+
+
 /*
  * Constructor for the player; initialize everything here. The side your AI is
  * on (BLACK or WHITE) is passed in as "side". The constructor must finish
  * within 30 seconds.
  */
-Player::Player(Side side) {
+Player::Player(Side side) 
+{
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
     color = side;	//side that the player is on
     playerboard = new Board();	//board that I deal with
-    /*
-     * TODO: Do any initialization you need to do here (setting up the board,
-     * precalculating things, etc.) However, remember that you will only have
-     * 30 seconds.
-     */
 }
 
 /*
  * Destructor for the player.
  */
-Player::~Player() {
+Player::~Player() 
+{
 }
+
+
 
 /*
  * Compute the next move given the opponent's last move. Your AI is
@@ -47,13 +48,8 @@ Player::~Player() {
  * The move returned must be legal; if there are no valid moves for your side,
  * return nullptr.
  */
-Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    /*
-     * TODO: Implement how moves your AI should play here. You should first
-     * process the opponent's opponents move before calculating your own move
-     */
-
-	//making the opponents move first
+Move *Player::doMove(Move *opponentsMove, int msLeft) 
+{   
 	if (color == WHITE)
 	{
 		playerboard->doMove(opponentsMove, BLACK);
@@ -62,9 +58,9 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	{
 		playerboard->doMove(opponentsMove, WHITE);
 	}
-
-
 	
+
+	// calculate my AI's move
 	std::vector<Move*> array;
 	int desiredmove = 0;
 	int maxscore;
@@ -81,7 +77,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         	}
     	}
 
-    	//This is stuff for our heuristic and beating simpleplayer
+    	//This is the code for our heuristic and beating simpleplayer
     	maxscore = playerboard->getMoveScore(array[0], color);
     	for(unsigned int i = 0; i < array.size(); i++)
     	{

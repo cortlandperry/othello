@@ -69,7 +69,7 @@ bool Board::hasMoves(Side side) {
 
 
 /*
-*   This will give us the optimal weighted square aka the hueristic
+*   Helper Function: This will give us the optimal weighted square aka the hueristic
 *   Return 0 if it is diagnol next to corner, 1 if on edge next to the corner
 *   Return 100 if it is on corner
 *   Return 75 if on edge
@@ -80,8 +80,8 @@ int Board::getWeight(Move *m) {
     int Y = m->getY();
     int answer;
 
-    //initializing values for the weights, corners are highest weight
-    //middle is average, near corners is pretty bad
+    // initializing values for the weights. Corner piece is highest weight,
+    // edge piece is next highest weight, middle is average, near corners is pretty bad
     int weights[8][8] = 
     {
         {1000, -20, 200, 200, 200, 200, -20, 1000},
