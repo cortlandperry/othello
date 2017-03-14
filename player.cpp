@@ -205,5 +205,141 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	return best_move;			
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// This code calls attempts to beat BetterPlayer going 4 levels deep 	
+	
+	// The move to be returned at the end of the minmax algorithm
+	Move * best_move;
+	
+	// the maximum of the worst case scenarios and the score using the heuristic of the difference in number of stones on the board.
+	int minimax = 0, score = 0;
+	
+	// represents the color of the opponent
+	Side opponent = (color == BLACK) ? WHITE : BLACK;
+	
+	
+	// base case if there are no valid moves for our AI
+	if (playerboard->hasMoves(color) == false)
+	{
+		return nullptr;
+	}
+	
+	// otherwise calculate the best move for our AI
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++) 
+		{
+			Move *first_move = new Move(i, j);         	
+			if (playerboard->checkMove(first_move, color))
+			{
+				// clone the playerboard so as to make first_move on it
+				Board *first_board = playerboard->copy();
+				// make first_move on the copied board
+				first_board->doMove(first_move, color);
+				
+				// initialize the minimum variable
+				int minimum;
+				
+				// loop through to find the possible moves on the cloned board after making the first_move
+				for (int k = 0; k < 8; k ++)
+				{
+					for (int s = 0; s < 8; s++)
+					{
+						Move *second_move = new Move(k, s);
+						if (first_board->checkMove(second_move, opponent))
+						{
+							// clone first_board so as to make second_move on it
+							Board *second_board = first_board->copy();
+							// make second_move on the copied board
+							second_board->doMove(second_move, opponent);
+							
+						
+							for (int l = 0; l < 8; l++)
+							{
+								for (int f = 0; f < 8; f++)
+								{
+									Move *third_move = new Move(l, f);
+									if (second_board->doMove(third_move, player)
+									{
+										Board *third_board = second_board->copy();
+										third_board->doMove(third_move, player);
+										
+										for (int n = 0; n < 8;n++)
+										{
+											for (int p = 0; p < 8; p++)
+											{
+												Move *fourth_move = new Move(n, p);
+												if (third_board->doMove(fourth_move, opponent)
+												{
+													Board *fourth_board = third_board->copy();
+													fourth_board->doMove(fourth_move, opponent);
+							
+													// calculate the simple heuristic score of the opponent on the second_board
+													score = second_board->getSimpleScore(opponent);
+							
+													// compute the worst possible scenario for our AI
+													if (score < minimum)
+													{
+														minimum = score;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						
+						// compute the maximum of the worst-case scenarios for our AI
+						if (minimax < minimum)
+						{
+							minimax = minimum;			
+							best_move = first_move;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return best_move;	
 }
 	
