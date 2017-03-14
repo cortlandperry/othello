@@ -135,7 +135,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 	
 	
 	
-	
+	/*
 	// This code calls the Minimax player	
 	
 	// The move to be returned at the end of the minmax algorithm
@@ -203,7 +203,9 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 		}
 	}
 	
-	return best_move;			
+	return best_move;
+	*/
+		
 	
 	
 	
@@ -297,23 +299,23 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 								for (int f = 0; f < 8; f++)
 								{
 									Move *third_move = new Move(l, f);
-									if (second_board->doMove(third_move, player)
+									if (second_board->checkMove(third_move, color))
 									{
 										Board *third_board = second_board->copy();
-										third_board->doMove(third_move, player);
+										third_board->doMove(third_move, color);
 										
 										for (int n = 0; n < 8;n++)
 										{
 											for (int p = 0; p < 8; p++)
 											{
 												Move *fourth_move = new Move(n, p);
-												if (third_board->doMove(fourth_move, opponent)
+												if (third_board->checkMove(fourth_move, opponent))
 												{
 													Board *fourth_board = third_board->copy();
 													fourth_board->doMove(fourth_move, opponent);
 							
-													// calculate the simple heuristic score of the opponent on the second_board
-													score = second_board->getSimpleScore(opponent);
+													// calculate the simple heuristic score of the opponent on the fourth_board
+													score = fourth_board->getSimpleScore(opponent);
 							
 													// compute the worst possible scenario for our AI
 													if (score < minimum)
@@ -339,6 +341,8 @@ Move *Player::doMove(Move *opponentsMove, int msLeft)
 			}
 		}
 	}
+	cerr << best_move->getX() << endl;
+	//playerboard->doMove(best_move, color);
 
 	return best_move;	
 }
